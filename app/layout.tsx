@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { GlobalHeader } from "@/components/global-header";
 import "./globals.css";
+import { NavBar } from "@/components/navbar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -19,19 +20,22 @@ export const metadata: Metadata = {
   description: "Search and review movies.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en" className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
-      >
-        <GlobalHeader />
-        {children}
-      </body>
-    </html>
-  );
+    return (
+      <html lang="en" className="dark">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
+        >
+          <GlobalHeader />
+          <NavBar />
+          <main>
+            {children}
+          </main>
+        </body>
+      </html>
+    );
 }
