@@ -16,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "JR Movies",
+  title: "Popcoin",
   description: "Search and review movies.",
 };
 
