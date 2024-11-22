@@ -1,3 +1,5 @@
+"use client"
+
 import {
     Sidebar,
     SidebarContent,
@@ -11,47 +13,55 @@ import {
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 const movieSections = [
     {
-        title: "All",
-        url: "/movies",
+        title: "Discover",
+        url: "/movies/discover",
     },
     {
         title: "Trending",
-        url: "/trending",
+        url: "/movies/trending",
     },
     {
         title: "Popular",
-        url: "/popular",
+        url: "/movies/popular",
     },
     {
         title: "Upcoming",
-        url: "/upcoming",
+        url: "/movies/upcoming",
     }
 ]
    
 export function GlobalSidebar() {
+    const pathname = usePathname();
+
     return (
         <Sidebar>
         {/* <SidebarHeader /> */}
-        <SidebarContent>
-            <SidebarGroup>
-                <SidebarGroupLabel>Movies</SidebarGroupLabel>
-                <SidebarGroupContent>
-                    <SidebarMenu>
-                    {movieSections.map((item) => (
-                        <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton asChild>
-                            <Link href={item.url}>{item.title}</Link>
-                        </SidebarMenuButton>
-                        </SidebarMenuItem>
-                    ))}
-                    </SidebarMenu>
-                </SidebarGroupContent>
-            </SidebarGroup>
-            <SidebarGroup />
-        </SidebarContent>
+            <SidebarContent>
+                <SidebarGroup>
+                    <SidebarGroupLabel>Movies</SidebarGroupLabel>
+                    <SidebarGroupContent>
+                        <SidebarMenu>
+                        {movieSections.map((item) => (
+                            <SidebarMenuItem key={item.title}>
+                            <SidebarMenuButton asChild>
+                                <Link
+                                    href={item.url}
+                                    className={`${pathname === item.url ? "bg-accent text-accent-foreground" : ""}`}
+                                >
+                                    {item.title}
+                                </Link>
+                            </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        ))}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
+                <SidebarGroup />
+            </SidebarContent>
         {/* <SidebarFooter /> */}
         </Sidebar>
     )

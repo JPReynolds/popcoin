@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { ThemeSwitcher } from "./theme-switcher";
 import { getTheme } from "@/lib/theme";
+import { Popcorn } from "lucide-react";
 
 export async function GlobalHeader() {
     const theme = await getTheme();
     return (
-        <header className="p-2 flex flex-row items-center border-solid border-b-2">
-            <h1 className="flex-1">
-                <Link href="/">
-                    Popcoin
-                </Link>
-            </h1>
+        <header className="p-2 flex flex-row items-center justify-between border-solid border-b-2">
+            <div className="w-10" />
+            <Link href="/" className="uppercase flex flex-row">
+                <Popcorn />
+                Popcoin
+            </Link>
             <ThemeSwitcher initialTheme={theme} />
         </header>
     );

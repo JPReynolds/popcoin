@@ -7,7 +7,7 @@ export type Genre = {
 
 export type Genres = Genre[]
 
-interface Movie {
+export interface Movie {
     id: number;
     title: string;
     overview: string;
@@ -15,6 +15,8 @@ interface Movie {
     release_date: string;
     vote_average: number;
 }
+
+export type Movies = Movie[];
 
 interface MovieDetails extends Movie {
   original_title: string;
@@ -32,6 +34,30 @@ type TrendingResponse = {
     total_results: number;
 }
 
+// export async function getMovieSearch(query: string, page: string = "1"): Promise<Movie[]> {
+//   const url = `${BASE_TMDB_URL}search/movie?query=${encodeURIComponent(query)}&page=${page}&language=en-US`
+
+//   const res = await fetch(url, {
+//     headers: {
+//       'Authorization': `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`
+//     }
+//   });
+  
+//   const data = await res.json() as TrendingResponse;
+//   return data.results;
+// }
+
+export async function getMovies(): Promise<Movie[]> {
+  const res = await fetch(`${BASE_TMDB_URL}discover/movie`, {
+      headers: {
+        'Authorization': `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`
+      }
+    });
+    
+    const data = await res.json() as TrendingResponse;
+    return data.results;
+}
+
 export async function getTrendingMovies(): Promise<Movie[]> {
     const res = await fetch(`${BASE_TMDB_URL}trending/movie/week`, {
         headers: {
@@ -44,7 +70,7 @@ export async function getTrendingMovies(): Promise<Movie[]> {
 }
 
 export async function getPopularMovies(): Promise<Movie[]> {
-  const res = await fetch(`${BASE_TMDB_URL}trending/movie/popular`, {
+  const res = await fetch(`${BASE_TMDB_URL}movie/popular`, {
       headers: {
         'Authorization': `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`
       }

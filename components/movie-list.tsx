@@ -1,10 +1,9 @@
-import { getTrendingMovies } from "@/lib/tmdb";
+import { Movies } from "@/lib/tmdb";
 import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 import Link from "next/link";
 
-export async function MovieList() {
-    const movies = await getTrendingMovies();
+export function MovieList({ movies }: { movies: Movies }) {
     return (
         <div className="flex justify-center">
             <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-6xl">

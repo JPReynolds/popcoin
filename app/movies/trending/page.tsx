@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import { MovieListSkeleton } from "@/components/movie-list-skeleton";
-import { DiscoverMovies } from "@/components/discover-movies";
+import { TrendingMovies } from "@/components/trending-movies";
 
-export default async function Movies() {
+export default async function Trending() {
     return (
         <div className="flex justify-center">
             <Suspense fallback={<MovieListSkeleton />}>
-                <DiscoverMovies />   
+                <TrendingMovies />   
             </Suspense>
         </div>
     )
