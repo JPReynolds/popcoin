@@ -30,11 +30,11 @@ export default async function RootLayout({
     return (
       <html lang="en" className={theme}>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background min-h-screen flex flex-col`}
         >
           <GlobalHeader />
           <NavBar />
-          <main>
+          <main className="px-[15%] flex-1 flex flex-col">
             {children}
           </main>
         </body>
