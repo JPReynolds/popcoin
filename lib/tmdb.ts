@@ -47,14 +47,20 @@ type TrendingResponse = {
 //   return data.results;
 // }
 
-export async function getMovies(): Promise<Movie[]> {
-  const res = await fetch(`${BASE_TMDB_URL}discover/movie`, {
-      headers: {
-        'Authorization': `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`
-      }
+export async function getMovies(query?: string): Promise<Movie[]> {
+    let url = `${BASE_TMDB_URL}discover/movie`;
+    if (query) {
+      url = `${BASE_TMDB_URL}search/movie?query=${encodeURIComponent(query)}`
+    }
+    const res = await fetch(url, {
+        headers: {
+          'Authorization': `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`
+        }
     });
+
     
     const data = await res.json() as TrendingResponse;
+    console.log(data)
     return data.results;
 }
 
