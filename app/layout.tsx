@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { GlobalHeader } from "@/components/global-header";
-import "./globals.css";
-import { NavBar } from "@/components/navbar";
 import { getTheme } from "@/lib/theme";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { GlobalSidebar } from "@/components/global-sidebar";
+import "./globals.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,13 +31,16 @@ export default async function RootLayout({
     return (
       <html lang="en" className={theme}>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background min-h-screen flex flex-col`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background min-h-screen`}
         >
-          <GlobalHeader />
-          <NavBar />
-          <main className="px-[15%] flex-1 flex flex-col">
-            {children}
-          </main>
+          <SidebarProvider>
+            <GlobalSidebar />
+            <main className="w-full">
+              <GlobalHeader />
+              <SidebarTrigger />
+              {children}
+            </main>
+          </SidebarProvider>
         </body>
       </html>
     );

@@ -43,6 +43,28 @@ export async function getTrendingMovies(): Promise<Movie[]> {
       return data.results;
 }
 
+export async function getPopularMovies(): Promise<Movie[]> {
+  const res = await fetch(`${BASE_TMDB_URL}trending/movie/popular`, {
+      headers: {
+        'Authorization': `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`
+      }
+    });
+    
+    const data = await res.json() as TrendingResponse;
+    return data.results;
+}
+
+export async function getTopRatedMovies(): Promise<Movie[]> {
+  const res = await fetch(`${BASE_TMDB_URL}trending/movie/week`, {
+      headers: {
+        'Authorization': `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`
+      }
+    });
+    
+    const data = await res.json() as TrendingResponse;
+    return data.results;
+}
+
 export async function getMovieDetails(id: string): Promise<MovieDetails> {
   const res = await fetch(`${BASE_TMDB_URL}movie/${Number(id)}`, {
     headers: {
