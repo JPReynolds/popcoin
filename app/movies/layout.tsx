@@ -8,7 +8,7 @@ export const metadata = {
     children: React.ReactNode;
   }) {
     return (
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col px-10">
         {children}
       </div>
     );
