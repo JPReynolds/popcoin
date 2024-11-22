@@ -12,6 +12,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { Star, Telescope, TrendingUp } from "lucide-react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
@@ -19,19 +20,18 @@ const movieSections = [
     {
         title: "Discover",
         url: "/movies/discover",
+        icon: <Telescope />
     },
     {
         title: "Trending",
         url: "/movies/trending",
+        icon: <TrendingUp />,
     },
     {
         title: "Popular",
         url: "/movies/popular",
+        icon: <Star />,
     },
-    {
-        title: "Upcoming",
-        url: "/movies/upcoming",
-    }
 ]
    
 export function GlobalSidebar() {
@@ -52,6 +52,7 @@ export function GlobalSidebar() {
                                     href={item.url}
                                     className={`${pathname === item.url ? "bg-accent text-accent-foreground" : ""}`}
                                 >
+                                    {item.icon}
                                     {item.title}
                                 </Link>
                             </SidebarMenuButton>

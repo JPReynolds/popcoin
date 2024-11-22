@@ -9,7 +9,7 @@ import { useDebounce } from "@/hooks/use-debounce";
 export function SearchBar() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [query, setQuery] = useState(searchParams.get("q") || "");
+    const [query, setQuery] = useState(searchParams.get("query") || "");
 
     const updateQueryParams = useDebounce((newQuery: string) => {
         const params = new URLSearchParams(searchParams.toString());
@@ -30,9 +30,9 @@ export function SearchBar() {
     };
   
     return (
-      <div className="relative w-full max-w-sm p-4">
+      <div className="relative w-full max-w-sm py-4">
         <Search 
-            className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-500" 
+            className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" 
             size={18}
         />
         <Input
