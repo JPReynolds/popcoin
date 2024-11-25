@@ -1,11 +1,8 @@
+import { Genres } from '@/app/types';
+import 'server-only'
+import { buildUrl } from './utils';
+
 export const BASE_TMDB_URL = "https://api.themoviedb.org/3/";
-
-export type Genre = {
-  id: number;
-  name: string;
-}
-
-export type Genres = Genre[]
 
 export interface Movie {
     id: number;
@@ -34,34 +31,28 @@ type TrendingResponse = {
     total_results: number;
 }
 
-// export async function getMovieSearch(query: string, page: string = "1"): Promise<Movie[]> {
-//   const url = `${BASE_TMDB_URL}search/movie?query=${encodeURIComponent(query)}&page=${page}&language=en-US`
+export async function getMovies(query?: string, genres?: string): Promise<Movie[]> {
+  const endpoint = query ? 'search/movie' : 'discover/movie';
+  const params = {
+      query: query,
+      with_genres: genres,
+  };
 
-//   const res = await fetch(url, {
-//     headers: {
-//       'Authorization': `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`
-//     }
-//   });
-  
-//   const data = await res.json() as TrendingResponse;
-//   return data.results;
-// }
+  const url = buildUrl(BASE_TMDB_URL, endpoint, params);
 
-export async function getMovies(query?: string): Promise<Movie[]> {
-    let url = `${BASE_TMDB_URL}discover/movie`;
-    if (query) {
-      url = `${BASE_TMDB_URL}search/movie?query=${encodeURIComponent(query)}`
-    }
-    const res = await fetch(url, {
-        headers: {
+  const res = await fetch(url, {
+      headers: {
           'Authorization': `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`
-        }
-    });
+      }
+  });
 
-    
-    const data = await res.json() as TrendingResponse;
-    console.log(data)
-    return data.results;
+  if (!res.ok) {
+      throw new Error(`Error fetching movies: ${res.statusText}`);
+  }
+
+  const data = await res.json() as TrendingResponse;
+
+  return data.results;
 }
 
 export async function getTrendingMovies(): Promise<Movie[]> {
