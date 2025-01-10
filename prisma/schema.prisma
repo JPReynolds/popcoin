@@ -14,30 +14,30 @@ datasource db {
 }
 
 model User {
-  id        String @id @default(cuid())
-  name      String?
-  email     String? @unique
-  password  String?
+  id       String  @id @default(cuid())
+  name     String?
+  email    String? @unique
+  password String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  favourites    Favourite[]
+  favourites Favourite[]
 }
 
 model Movie {
-  id String @id
-  title String?
+  id           String      @id
+  title        String?
   favouritedBy Favourite[]
 }
 
 model Favourite {
-  id String @id @default(cuid())
-  userId String
-  movieId String
+  id        String   @id @default(cuid())
+  userId    String
+  movieId   String
   createdAt DateTime @default(now())
-  user User @relation(fields: [userId], references: [id])
-  movie Movie @relation(fields: [movieId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+  movie     Movie    @relation(fields: [movieId], references: [id])
 
   @@unique([userId, movieId])
 }
