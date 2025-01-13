@@ -15,6 +15,8 @@ import { signUp } from "../actions";
 
 export default function SignUp() {
   const [state, formAction] = useActionState(signUp, {});
+
+  console.log(state);
   return (
     <div className="min-h-screen flex justify-center items-start md:items-center p-8">
       <Card className="w-full max-w-md mx-auto">
@@ -38,7 +40,11 @@ export default function SignUp() {
                 required
               />
               {state.errors?.username && (
-                <p className="text-sm text-red-500">{state.errors.username}</p>
+                <ul className="text-sm text-red-500">
+                  {state.errors.username.map((error) => (
+                    <li key={error}>{error}</li>
+                  ))}
+                </ul>
               )}
             </div>
 
@@ -53,9 +59,11 @@ export default function SignUp() {
                 className="w-full"
                 required
               />
-              {state.errors?.email && (
-                <p className="text-sm text-red-500">{state.errors.email}</p>
-              )}
+              <ul className="text-sm text-red-500">
+                {state.errors?.email?.map((error) => (
+                  <li key={error}>{error}</li>
+                ))}
+              </ul>
             </div>
 
             <div className="space-y-2">
@@ -69,9 +77,11 @@ export default function SignUp() {
                 className="w-full"
                 required
               />
-              {state.errors?.password && (
-                <p className="text-sm text-red-500">{state.errors.password}</p>
-              )}
+              <ul className="text-sm text-red-500">
+                {state.errors?.password?.map((error) => (
+                  <li key={error}>{error}</li>
+                ))}
+              </ul>
             </div>
 
             <Button type="submit" className="w-full">
