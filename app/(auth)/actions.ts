@@ -1,9 +1,12 @@
 "use server";
 
+import { prisma } from "@/prisma/prisma";
 import { z } from "zod";
+import { hash } from "bcryptjs";
+import { redirect } from "next/navigation";
 
 const SignUpSchema = z.object({
-  username: z.string().min(3, "Username must be at least 3 characters"),
+  name: z.string().min(3, "Name must be at least 3 characters"),
   email: z.string().email("Invalid email address"),
   password: z
     .string()
@@ -17,11 +20,11 @@ const SignUpSchema = z.object({
 });
 
 export type SignUpActionState = {
-  username?: string;
+  name?: string;
   password?: string;
   email?: string;
   errors?: {
-    username?: string[];
+    name?: string[];
     password?: string[];
     email?: string[];
   };
@@ -33,7 +36,7 @@ export async function signUp(
   formData: FormData
 ): Promise<SignUpActionState> {
   const validatedFields = SignUpSchema.safeParse({
-    username: formData.get("username"),
+    name: formData.get("name"),
     email: formData.get("email"),
     password: formData.get("password"),
   });
@@ -45,9 +48,42 @@ export async function signUp(
     };
   }
 
-  // @TODO
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  return {
-    message: "Account created successfully!",
-  };
+  const { name, email, password } = validatedFields.data;
+
+  const existingUser = await prisma.user.findFirst({
+    select: {
+      id: true,
+    },
+    where: { email },
+  });
+
+  if (existingUser) {
+    return {
+      errors: {
+        email: ["An account with this email already exists"],
+      },
+      message: "Failed to create account.",
+    };
+  }
+
+  const hashedPassword = await hash(password, 10);
+
+  try {
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+      },
+    });
+
+    console.log("User created!!");
+  } catch (e) {
+    console.error("Failed to create user", e);
+    return {
+      errors: {},
+      message: "Something went wrong. Please try again.",
+    };
+  }
+  redirect("/");
 }

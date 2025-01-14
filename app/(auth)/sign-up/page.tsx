@@ -16,7 +16,6 @@ import { signUp } from "../actions";
 export default function SignUp() {
   const [state, formAction] = useActionState(signUp, {});
 
-  console.log(state);
   return (
     <div className="min-h-screen flex justify-center items-start md:items-center p-8">
       <Card className="w-full max-w-md mx-auto">
@@ -29,19 +28,19 @@ export default function SignUp() {
         <CardContent>
           <form action={formAction} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="username" className="text-body-sm">
-                Username
+              <Label htmlFor="name" className="text-body-sm">
+                Name
               </Label>
               <Input
                 type="text"
-                id="username"
-                name="username"
+                id="name"
+                name="name"
                 className="w-full"
                 required
               />
-              {state.errors?.username && (
+              {state.errors?.name && (
                 <ul className="text-sm text-red-500">
-                  {state.errors.username.map((error) => (
+                  {state.errors.name.map((error) => (
                     <li key={error}>{error}</li>
                   ))}
                 </ul>
@@ -83,6 +82,12 @@ export default function SignUp() {
                 ))}
               </ul>
             </div>
+
+            {state?.message && (
+              <div className={state.errors ? "text-red-500" : "text-green-500"}>
+                {state.message}
+              </div>
+            )}
 
             <Button type="submit" className="w-full">
               Create account
