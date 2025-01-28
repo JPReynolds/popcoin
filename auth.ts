@@ -22,8 +22,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     updateAge: 24 * 60 * 60, // 24 hours
   },
   pages: {
-    // signIn: "/login",
-    error: "/auth/error",
+    signIn: "/sign-in",
+    // error: "/auth/error",
   },
   providers: [
     Credentials({
@@ -36,10 +36,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           const { email, password } = await signInSchema.parseAsync(
             credentials
           );
-
-          if (!email || !password) {
-            throw new Error("Please provide the email and password.");
-          }
 
           const user = await prisma.user.findFirst({
             select: {
@@ -67,8 +63,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             name: user.name,
           };
         } catch (error) {
-          if (error instanceof ZodError) return null;
-          throw new Error((error as Error).message || "Authentication failed.");
+          if (error instanceof ZodError) {
+            return null;
+          }
+          throw error;
         }
       },
     }),

@@ -7,15 +7,15 @@ import {
   Card,
   CardHeader,
   CardTitle,
-  CardDescription,
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
 import Link from "next/link";
 import { Github } from "lucide-react";
+import { login } from "../actions";
 
 export default function SignIn() {
-  const [state, formAction] = useActionState(() => {}, {});
+  const [state, formAction] = useActionState(login, {});
 
   return (
     <div className="min-h-screen flex justify-center items-start md:items-center p-8">
@@ -36,11 +36,6 @@ export default function SignIn() {
                 className="w-full"
                 required
               />
-              <ul className="text-sm text-red-500">
-                {state.errors?.email?.map((error) => (
-                  <li key={error}>{error}</li>
-                ))}
-              </ul>
             </div>
 
             <div className="space-y-2">
@@ -52,19 +47,12 @@ export default function SignIn() {
                 id="password"
                 name="password"
                 className="w-full"
-                required
+                // required
               />
-              <ul className="text-sm text-red-500">
-                {state.errors?.password?.map((error) => (
-                  <li key={error}>{error}</li>
-                ))}
-              </ul>
             </div>
 
             {state?.message && (
-              <div className={state.errors ? "text-red-500" : "text-green-500"}>
-                {state.message}
-              </div>
+              <div className="text-red-500">{state.message}</div>
             )}
 
             <Button type="submit" className="w-full">

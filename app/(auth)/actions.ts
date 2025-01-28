@@ -4,6 +4,8 @@ import { prisma } from "@/prisma/prisma";
 import { z } from "zod";
 import { hash } from "bcryptjs";
 import { redirect } from "next/navigation";
+import { signIn } from "@/auth";
+import { CredentialsSignin } from "next-auth";
 
 const SignUpSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters"),
@@ -30,6 +32,40 @@ export type SignUpActionState = {
   };
   message?: string;
 };
+
+export type LoginActionState = {
+  email?: string;
+  password?: string;
+  message?: string;
+};
+
+export async function login(
+  _prevState: LoginActionState,
+  formData: FormData
+): Promise<LoginActionState> {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  try {
+    await signIn("credentials", {
+      redirect: false,
+      callbackUrl: "/",
+      email,
+      password,
+    });
+
+    redirect("/");
+  } catch (error) {
+    if (error instanceof CredentialsSignin) {
+      return {
+        message: "Invalid email or password.",
+      };
+    }
+    return {
+      message: (error as Error).message || "Authentication failed.",
+    };
+  }
+}
 
 export async function signUp(
   _prevState: SignUpActionState,
