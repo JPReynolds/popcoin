@@ -11,43 +11,20 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
-import { signUp } from "../actions";
 import Link from "next/link";
+import { Github } from "lucide-react";
 
-export default function SignUp() {
-  const [state, formAction] = useActionState(signUp, {});
+export default function SignIn() {
+  const [state, formAction] = useActionState(() => {}, {});
 
   return (
     <div className="min-h-screen flex justify-center items-start md:items-center p-8">
       <Card className="w-full max-w-md mx-auto">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-h3">Create an account</CardTitle>
-          <CardDescription className="text-body-sm text-muted-foreground">
-            Enter your details below to create your account
-          </CardDescription>
+          <CardTitle className="text-h3">Sign In</CardTitle>
         </CardHeader>
         <CardContent>
           <form action={formAction} className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-body-sm">
-                Name
-              </Label>
-              <Input
-                type="text"
-                id="name"
-                name="name"
-                className="w-full"
-                required
-              />
-              {state.errors?.name && (
-                <ul className="text-sm text-red-500">
-                  {state.errors.name.map((error) => (
-                    <li key={error}>{error}</li>
-                  ))}
-                </ul>
-              )}
-            </div>
-
             <div className="space-y-2">
               <Label htmlFor="email" className="text-body-sm">
                 Email
@@ -91,15 +68,22 @@ export default function SignUp() {
             )}
 
             <Button type="submit" className="w-full">
-              Create account
+              Sign In
+            </Button>
+          </form>
+          <div className="my-8 w-full bg-accent h-[1px]" />
+          <form>
+            <Button type="submit" className="w-full">
+              <Github />
+              <span>Sign in with GitHub</span>
             </Button>
           </form>
         </CardContent>
         <CardFooter className="flex justify-center">
           <p className="text-body-sm text-muted-foreground">
-            Already have an account?{" "}
-            <Link href="/sign-in" className="text-primary hover:underline">
-              Sign in
+            Dont have an account?{" "}
+            <Link href="/sign-up" className="text-primary hover:underline">
+              Sign Up
             </Link>
           </p>
         </CardFooter>
