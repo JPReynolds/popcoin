@@ -10,7 +10,11 @@ export default auth(async (request: NextAuthRequest) => {
   const session = request.auth;
   const pathname = request.nextUrl.pathname;
 
-  if (session && ["/sign-up", "sign-in"].includes(pathname)) {
+  console.log("hello");
+  console.log(session);
+  console.log(pathname);
+
+  if (session && ["/sign-up", "/sign-in"].includes(pathname)) {
     return Response.redirect(new URL("/", request.url));
   }
 

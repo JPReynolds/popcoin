@@ -53,8 +53,6 @@ export async function login(
       email,
       password,
     });
-
-    redirect("/");
   } catch (error) {
     if (error instanceof CredentialsSignin) {
       return {
@@ -65,6 +63,7 @@ export async function login(
       message: (error as Error).message || "Authentication failed.",
     };
   }
+  redirect("/");
 }
 
 export async function signUp(
