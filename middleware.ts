@@ -10,6 +10,12 @@ export default auth(async (request: NextAuthRequest) => {
   const session = request.auth;
   const pathname = request.nextUrl.pathname;
 
+  console.log(pathname);
+
+  if (pathname === "/") {
+    return Response.redirect(new URL("/discover", request.url));
+  }
+
   if (session && ["/sign-up", "/sign-in"].includes(pathname)) {
     return Response.redirect(new URL("/", request.url));
   }
@@ -18,5 +24,5 @@ export default auth(async (request: NextAuthRequest) => {
 });
 
 export const config = {
-  matcher: ["/sign-up", "/sign-in"],
+  matcher: ["/sign-up", "/sign-in", "/"],
 };
