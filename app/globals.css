@@ -5,9 +5,7 @@
 @layer base {
   :root {
     --font-sans: Nunito Sans, Nunito Sans Fallback;
-    /* --font-mono: here if you got it... */
 
-    /* prefixed with foreground because it should look good on the background */
     --foreground-destructive: 345 82.7% 40.8%;
 
     --background: 0 0% 100%;
@@ -42,7 +40,6 @@
 
     --radius: 0.5rem;
 
-    /* Updated sidebar colors to match blue theme */
     --sidebar-background: 210 40% 98%;
     --sidebar-foreground: 222.2 47.4% 11.2%;
     --sidebar-primary: 222.2 47.4% 11.2%;
@@ -57,7 +54,6 @@
     --background: 222.2 84% 4.9%;
     --foreground: 210 40% 98%;
 
-    /* prefixed with foreground because it should look good on the background */
     --foreground-destructive: -4 84% 60%;
 
     --muted: 217.2 32.6% 12%;
@@ -87,7 +83,6 @@
 
     --ring: 217.2 32.6% 60%;
 
-    /* Updated sidebar colors to match blue theme */
     --sidebar-background: 222.2 84% 4.9%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 217.2 91.2% 59.8%;
