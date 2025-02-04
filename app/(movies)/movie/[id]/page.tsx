@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,14 +6,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getMovieDetails } from "@/lib/tmdb";
-import { StarIcon } from "lucide-react";
 import Image from "next/image";
+import { getFavoriteStatus } from "../../actions";
+import { FavoriteButton } from "@/components/favorite-button";
 
 export default async function Movie(props: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await props.params;
   const movie = await getMovieDetails(id);
+  const isFavorited = await getFavoriteStatus(id);
+
   return (
     <div className="container mx-auto py-8 flex-1 flex flex-col">
       <Card className="flex-1 border-none shadow-none">
@@ -66,10 +68,7 @@ export default async function Movie(props: {
               </div>
 
               <div className="flex flex-col gap-2 pt-4">
-                <Button variant="outline" className="w-fit gap-2">
-                  <StarIcon />
-                  Add to Watch List
-                </Button>
+                <FavoriteButton movieId={id} initialFavorited={isFavorited} />
               </div>
             </CardContent>
           </div>
