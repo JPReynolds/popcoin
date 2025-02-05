@@ -15,7 +15,7 @@ export async function GlobalHeader() {
         <Popcorn />
         Popcoin
       </Link>
-      <div>
+      <div className="flex flex-row gap-2">
         {session ? (
           <form
             action={async () => {

@@ -27,11 +27,11 @@ const movieSections = [
     url: "/trending",
     icon: <TrendingUp />,
   },
-  {
-    title: "Popular",
-    url: "/popular",
-    icon: <Star />,
-  },
+  // {
+  //   title: "Popular",
+  //   url: "/popular",
+  //   icon: <Star />,
+  // },
 ];
 
 export function GlobalSidebar() {
@@ -65,7 +65,28 @@ export function GlobalSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        <SidebarGroup />
+        <SidebarGroup>
+          <SidebarGroupLabel>Account</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem key={"watchlist"}>
+                <SidebarMenuButton asChild>
+                  <Link
+                    href={"/watchlist"}
+                    className={`${
+                      pathname === "/watchlist"
+                        ? "bg-accent text-accent-foreground"
+                        : ""
+                    }`}
+                  >
+                    <Star />
+                    Watchlist
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
       {/* <SidebarFooter /> */}
     </Sidebar>

@@ -26,7 +26,7 @@ export function FavoriteButton({
   const isFavorited = state.favorited;
 
   return (
-    <form action={formAction}>
+    <form action={formAction} onClick={(e) => e.stopPropagation()}>
       <input type="hidden" name="movieId" defaultValue={movieId} />
       <Button
         variant={variant}
