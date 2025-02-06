@@ -3,92 +3,133 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarHeader,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
-import { Star, Telescope, TrendingUp } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Star, Telescope, TrendingUp, Popcorn } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const movieSections = [
-  {
-    title: "Discover",
-    url: "/discover",
-    icon: <Telescope />,
-  },
-  {
-    title: "Trending",
-    url: "/trending",
-    icon: <TrendingUp />,
-  },
-  // {
-  //   title: "Popular",
-  //   url: "/popular",
-  //   icon: <Star />,
-  // },
-];
+const navigationItems = {
+  movies: [
+    {
+      title: "Discover",
+      url: "/movies/discover",
+      icon: <Telescope />,
+    },
+    {
+      title: "Trending",
+      url: "/movies/trending",
+      icon: <TrendingUp />,
+    },
+    {
+      title: "Watchlist",
+      url: "/movies/watchlist",
+      icon: <Star />,
+    },
+  ],
+  series: [
+    {
+      title: "Discover",
+      url: "/series/discover",
+      icon: <Telescope />,
+    },
+    {
+      title: "Trending",
+      url: "/series/trending",
+      icon: <TrendingUp />,
+    },
+    {
+      title: "Watchlist",
+      url: "/series/watchlist",
+      icon: <Star />,
+    },
+  ],
+};
 
-export function GlobalSidebar() {
+export function GlobalSidebar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const defaultTab = pathname.startsWith("/series") ? "series" : "movies";
 
   return (
     <Sidebar>
-      {/* <SidebarHeader /> */}
+      <SidebarHeader className="flex flex-row items-center justify-center gap-2">
+        <Popcorn />
+        Popcoin
+      </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Movies</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {movieSections.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <Link
-                      href={item.url}
-                      className={`${
-                        pathname === item.url
-                          ? "bg-accent text-accent-foreground"
-                          : ""
-                      }`}
-                    >
-                      {item.icon}
-                      {item.title}
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Account</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem key={"watchlist"}>
-                <SidebarMenuButton asChild>
-                  <Link
-                    href={"/watchlist"}
-                    className={`${
-                      pathname === "/watchlist"
-                        ? "bg-accent text-accent-foreground"
-                        : ""
-                    }`}
-                  >
-                    <Star />
-                    Watchlist
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        <Tabs defaultValue={defaultTab} className="w-full">
+          <div className="p-2">
+            <TabsList className="w-full">
+              <TabsTrigger value="movies" className="flex-1">
+                Movies
+              </TabsTrigger>
+              <TabsTrigger value="series" className="flex-1">
+                Series
+              </TabsTrigger>
+            </TabsList>
+          </div>
+
+          <TabsContent value="movies" className="m-0">
+            <SidebarGroup>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {navigationItems.movies.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild>
+                        <Link
+                          href={item.url}
+                          className={`${
+                            pathname === item.url
+                              ? "bg-accent text-accent-foreground"
+                              : ""
+                          }`}
+                        >
+                          {item.icon}
+                          {item.title}
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </TabsContent>
+
+          <TabsContent value="series">
+            <SidebarGroup>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {navigationItems.series.map((item) => (
+                    <SidebarMenuItem key={item.title}>
+                      <SidebarMenuButton asChild>
+                        <Link
+                          href={item.url}
+                          className={`${
+                            pathname === item.url
+                              ? "bg-accent text-accent-foreground"
+                              : ""
+                          }`}
+                        >
+                          {item.icon}
+                          {item.title}
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </TabsContent>
+        </Tabs>
       </SidebarContent>
-      {/* <SidebarFooter /> */}
+      <SidebarFooter>{children}</SidebarFooter>
     </Sidebar>
   );
 }

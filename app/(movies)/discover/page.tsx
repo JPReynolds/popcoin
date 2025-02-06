@@ -13,7 +13,7 @@ export default async function Discover(props: {
 
   return (
     <div className="flex flex-col justify-center">
-      <div className="flex flex-row justify-between align-middle py-4">
+      <div className="flex flex-row justify-between align-middle py-4 gap-4">
         <SearchBar />
         <MovieGenreDropdown />
       </div>
