@@ -112,7 +112,15 @@ export async function signUp(
       },
     });
 
-    console.log("User created!!");
+    // Sign in the user after successful account creation
+    await signIn("credentials", {
+      redirect: false,
+      callbackUrl: "/",
+      email,
+      password,
+    });
+
+    console.log("User created and signed in!");
   } catch (e) {
     console.error("Failed to create user", e);
     return {
