@@ -77,13 +77,22 @@ model Movie {
   favouritedBy Favourite[]
 }
 
+model Series {
+  id           String      @id
+  name         String?
+  favouritedBy Favourite[]
+}
+
 model Favourite {
   id        String   @id @default(cuid())
   userId    String
-  movieId   String
+  movieId   String?
+  seriesId  String?
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-  movie     Movie    @relation(fields: [movieId], references: [id])
+  movie     Movie?   @relation(fields: [movieId], references: [id])
+  series    Series?  @relation(fields: [seriesId], references: [id])
 
   @@unique([userId, movieId])
+  @@unique([userId, seriesId])
 }

@@ -1,7 +1,7 @@
 import { Card } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 
-export function MovieSkeleton() {
+export function MediaSkeleton() {
   return (
     <div className="container mx-auto py-8 flex-1 flex flex-col">
       <Card className="flex-1 border-none shadow-none">

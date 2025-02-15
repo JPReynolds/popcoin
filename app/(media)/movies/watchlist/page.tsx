@@ -1,16 +1,20 @@
-import { getFavoriteMovies } from "../actions";
+import { getFavorites } from "../../actions";
 import { getMovieDetails } from "@/lib/tmdb";
-import { MovieList } from "@/components/movie-list";
+import { MediaList } from "@/components/media-list";
 
 export default async function WatchlistPage() {
-  const favorites = await getFavoriteMovies();
+  const favorites = await getFavorites("movies");
 
   // Fetch full movie details for each favorite
   const movies = await Promise.all(
-    favorites.map(async (fav) => {
-      const movie = await getMovieDetails(fav.movieId);
-      return movie;
-    })
+    favorites
+      .filter(
+        (fav): fav is typeof fav & { movieId: string } => fav.movieId !== null
+      )
+      .map(async (fav) => {
+        const movie = await getMovieDetails(fav.movieId);
+        return movie;
+      })
   );
 
   return (
@@ -21,7 +25,7 @@ export default async function WatchlistPage() {
           You haven&apos;t added any movies to your watchlist yet.
         </p>
       ) : (
-        <MovieList movies={movies} />
+        <MediaList items={movies} type="movies" />
       )}
     </div>
   );

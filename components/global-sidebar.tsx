@@ -57,6 +57,11 @@ export function GlobalSidebar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const defaultTab = pathname.startsWith("/series") ? "series" : "movies";
 
+  const getCurrentSection = () => {
+    const parts = pathname.split("/");
+    return parts.length > 2 ? parts[2] : "discover";
+  };
+
   return (
     <Sidebar>
       <SidebarHeader className="flex flex-row items-center justify-center gap-2">
@@ -68,10 +73,10 @@ export function GlobalSidebar({ children }: { children: React.ReactNode }) {
           <div className="p-2">
             <TabsList className="w-full">
               <TabsTrigger value="movies" className="flex-1">
-                Movies
+                <Link href={`/movies/${getCurrentSection()}`}>Movies</Link>
               </TabsTrigger>
               <TabsTrigger value="series" className="flex-1">
-                Series
+                <Link href={`/series/${getCurrentSection()}`}>Series</Link>
               </TabsTrigger>
             </TabsList>
           </div>

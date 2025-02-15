@@ -5,7 +5,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { GlobalSidebarFooter } from "@/components/global-sidebar-footer";
 
 export const metadata = {
-  title: "Popcoin - Movies",
+  title: "Popcoin",
 };
 
 export default async function Layout({

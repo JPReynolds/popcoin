@@ -1,8 +1,8 @@
 import { getMovies } from "@/lib/tmdb";
-import { MovieList } from "./movie-list";
+import { MediaList } from "./media-list";
 
-export async function DiscoverMovies(props: { query: string, genres: string }) {
-    const movies = await getMovies(props.query, props.genres);
+export async function DiscoverMovies(props: { query: string; genres: string }) {
+  const movies = await getMovies(props.query, props.genres);
 
-    return <MovieList movies={movies} />
+  return <MediaList items={movies} type="movies" />;
 }

@@ -63,7 +63,7 @@ export async function login(
       message: (error as Error).message || "Authentication failed.",
     };
   }
-  redirect("/");
+  redirect("/movies/discover");
 }
 
 export async function signUp(
@@ -120,5 +120,5 @@ export async function signUp(
       message: "Something went wrong. Please try again.",
     };
   }
-  redirect("/");
+  redirect("/movies/discover");
 }
