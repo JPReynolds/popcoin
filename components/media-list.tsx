@@ -27,7 +27,7 @@ async function MediaListItem({
   item: MediaItem;
   type: MediaType;
 }) {
-  const isFavorited = await getFavoriteStatus(item.id);
+  const isFavorited = await getFavoriteStatus(item.id, type);
   return (
     <li key={item.id}>
       <Link href={`/${type}/${item.id}`}>

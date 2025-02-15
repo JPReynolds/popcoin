@@ -8,7 +8,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-// import { FavoriteButton } from "@/components/favorite-button";
+import { FavoriteButton } from "@/components/favorite-button";
+import { getFavoriteStatus } from "../../actions";
 
 export default async function SeriesPage({
   params,
@@ -17,7 +18,7 @@ export default async function SeriesPage({
 }) {
   const { id } = await params;
   const series = await getSeriesDetails(id);
-  // const isFavorited = await getFavoriteStatus(params.id);
+  const isFavorited = await getFavoriteStatus(id, "series");
 
   if (!series) {
     notFound();
@@ -75,9 +76,13 @@ export default async function SeriesPage({
                 </div>
               </div>
 
-              {/* <div className="flex flex-col gap-2 pt-4">
-                <FavoriteButton movieId={id} initialFavorited={isFavorited} />
-              </div> */}
+              <div className="flex flex-col gap-2 pt-4">
+                <FavoriteButton
+                  mediaId={id}
+                  initialFavorited={isFavorited}
+                  mediaType="series"
+                />
+              </div>
             </CardContent>
           </div>
         </div>

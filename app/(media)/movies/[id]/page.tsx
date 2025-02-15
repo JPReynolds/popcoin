@@ -15,7 +15,7 @@ export default async function Movie(props: {
 }) {
   const { id } = await props.params;
   const movie = await getMovieDetails(id);
-  const isFavorited = await getFavoriteStatus(id);
+  const isFavorited = await getFavoriteStatus(id, "movies");
 
   return (
     <div className="container mx-auto py-8 flex-1 flex flex-col">
@@ -68,7 +68,11 @@ export default async function Movie(props: {
               </div>
 
               <div className="flex flex-col gap-2 pt-4">
-                <FavoriteButton movieId={id} initialFavorited={isFavorited} />
+                <FavoriteButton
+                  mediaId={id}
+                  initialFavorited={isFavorited}
+                  mediaType="movies"
+                />
               </div>
             </CardContent>
           </div>

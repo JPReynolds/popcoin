@@ -138,20 +138,36 @@ export async function toggleFavorite(
   };
 }
 
-export async function getFavoriteStatus(movieId: string | number) {
+export async function getFavoriteStatus(
+  mediaId: string | number,
+  mediaType: MediaType
+) {
   const session = await auth();
   if (!session?.user?.id) {
     return false;
   }
 
-  const favorite = await prisma.favourite.findUnique({
-    where: {
-      userId_movieId: {
-        userId: session.user.id,
-        movieId: String(movieId),
+  let favorite;
+
+  if (mediaType === "movies") {
+    favorite = await prisma.favourite.findUnique({
+      where: {
+        userId_movieId: {
+          userId: session.user.id,
+          movieId: String(mediaId),
+        },
       },
-    },
-  });
+    });
+  } else if (mediaType === "series") {
+    favorite = await prisma.favourite.findUnique({
+      where: {
+        userId_seriesId: {
+          userId: session.user.id,
+          seriesId: String(mediaId),
+        },
+      },
+    });
+  }
 
   return !!favorite;
 }
