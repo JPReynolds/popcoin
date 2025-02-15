@@ -12,7 +12,7 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Star, Telescope, TrendingUp, Popcorn } from "lucide-react";
+import { Star, Telescope, TrendingUp, Popcorn, Glasses } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -24,6 +24,11 @@ const navigationItems = {
       icon: <Telescope />,
     },
     {
+      title: "Popular",
+      url: "/movies/popular",
+      icon: <Star />,
+    },
+    {
       title: "Trending",
       url: "/movies/trending",
       icon: <TrendingUp />,
@@ -31,7 +36,7 @@ const navigationItems = {
     {
       title: "Watchlist",
       url: "/movies/watchlist",
-      icon: <Star />,
+      icon: <Glasses />,
     },
   ],
   series: [
@@ -41,6 +46,11 @@ const navigationItems = {
       icon: <Telescope />,
     },
     {
+      title: "Popular",
+      url: "/series/popular",
+      icon: <Star />,
+    },
+    {
       title: "Trending",
       url: "/series/trending",
       icon: <TrendingUp />,
@@ -48,7 +58,7 @@ const navigationItems = {
     {
       title: "Watchlist",
       url: "/series/watchlist",
-      icon: <Star />,
+      icon: <Glasses />,
     },
   ],
 };

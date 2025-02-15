@@ -1,8 +1,8 @@
 import { getTrendingMovies } from "@/lib/tmdb";
-import { MovieList } from "./movie-list";
+import { MediaList } from "./media-list";
 
 export async function TrendingMovies() {
-    const movies = await getTrendingMovies();
+  const movies = await getTrendingMovies();
 
-    return <MovieList movies={movies} />
+  return <MediaList items={movies} type="movies" />;
 }
