@@ -1,8 +1,14 @@
 import { getFavorites } from "../../actions";
 import { getMovieDetails } from "@/lib/tmdb";
 import { MediaList } from "@/components/media-list";
+import { auth } from "@/auth";
+import { redirect } from "next/navigation";
 
 export default async function WatchlistPage() {
+  const session = await auth();
+  if (!session) {
+    redirect("/sign-in");
+  }
   const favorites = await getFavorites("movies");
 
   // Fetch full movie details for each favorite

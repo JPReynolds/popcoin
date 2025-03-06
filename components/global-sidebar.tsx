@@ -15,25 +15,30 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Star, Telescope, TrendingUp, Popcorn, Glasses } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const navigationItems = {
   movies: [
     {
+      id: "discover",
       title: "Discover",
       url: "/movies/discover",
       icon: <Telescope />,
     },
     {
+      id: "popular",
       title: "Popular",
       url: "/movies/popular",
       icon: <Star />,
     },
     {
+      id: "trending",
       title: "Trending",
       url: "/movies/trending",
       icon: <TrendingUp />,
     },
     {
+      id: "watchlist",
       title: "Watchlist",
       url: "/movies/watchlist",
       icon: <Glasses />,
@@ -41,21 +46,25 @@ const navigationItems = {
   ],
   series: [
     {
+      id: "discover",
       title: "Discover",
       url: "/series/discover",
       icon: <Telescope />,
     },
     {
+      id: "popular",
       title: "Popular",
       url: "/series/popular",
       icon: <Star />,
     },
     {
+      id: "trending",
       title: "Trending",
       url: "/series/trending",
       icon: <TrendingUp />,
     },
     {
+      id: "watchlist",
       title: "Watchlist",
       url: "/series/watchlist",
       icon: <Glasses />,
@@ -68,6 +77,8 @@ export function GlobalSidebar({ children }: { children: React.ReactNode }) {
   const { id } = useParams<{ id: string }>();
   const defaultTab = pathname.startsWith("/series") ? "series" : "movies";
 
+  const session = useSession();
+
   const getCurrentSection = () => {
     const parts = pathname.split("/");
 
@@ -76,6 +87,20 @@ export function GlobalSidebar({ children }: { children: React.ReactNode }) {
 
     return parts.length > 2 ? parts[2] : "discover";
   };
+
+  const movieNavItems = navigationItems.movies.filter((item) => {
+    if (item.id === "watchlist" && !session) {
+      return false;
+    }
+    return true;
+  });
+
+  const seriesNavItems = navigationItems.series.filter((item) => {
+    if (item.id === "watchlist" && !session) {
+      return false;
+    }
+    return true;
+  });
 
   return (
     <Sidebar>
@@ -100,8 +125,8 @@ export function GlobalSidebar({ children }: { children: React.ReactNode }) {
             <SidebarGroup>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {navigationItems.movies.map((item) => (
-                    <SidebarMenuItem key={item.title}>
+                  {movieNavItems.map((item) => (
+                    <SidebarMenuItem key={item.id}>
                       <SidebarMenuButton asChild>
                         <Link
                           href={item.url}
@@ -126,8 +151,8 @@ export function GlobalSidebar({ children }: { children: React.ReactNode }) {
             <SidebarGroup>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {navigationItems.series.map((item) => (
-                    <SidebarMenuItem key={item.title}>
+                  {seriesNavItems.map((item) => (
+                    <SidebarMenuItem key={item.id}>
                       <SidebarMenuButton asChild>
                         <Link
                           href={item.url}
