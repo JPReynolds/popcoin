@@ -36,8 +36,8 @@ async function MediaListItem({
             <Image
               src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
               alt={getTitle(item, type)}
-              width={200}
-              height={300}
+              width={150}
+              height={225}
               className="w-full h-full object-cover"
             />
             <FavoriteButton

@@ -25,26 +25,26 @@ export default async function SeriesPage({
   }
 
   return (
-    <div className="container mx-auto py-8 flex-1 flex flex-col">
-      <Card className="flex-1 border-none shadow-none">
-        <div className="flex flex-col md:flex-row h-full p-6 gap-6">
+    <div className="mx-auto h-full flex items-center justify-center py-4 sm:py-6">
+      <Card className="border-none shadow-none max-w-5xl w-full">
+        <div className="flex flex-col md:flex-row h-full p-3 sm:p-4 gap-4">
           <div className="flex justify-center">
             <Image
               src={`https://image.tmdb.org/t/p/original${series.poster_path}`}
               alt={series.original_name}
               width={300}
-              height={500}
-              className="object-cover rounded-lg"
+              height={450}
+              className="object-cover rounded-lg max-h-[450px] w-auto"
               priority
             />
           </div>
           <div className="flex-1">
-            <CardHeader className="p-0 mb-6">
+            <CardHeader className="p-0 mb-4">
               <CardTitle>{series.original_name}</CardTitle>
               <CardDescription>{series.overview}</CardDescription>
             </CardHeader>
 
-            <CardContent className="p-0 space-y-4">
+            <CardContent className="p-0 space-y-3">
               <div className="flex items-center gap-2">
                 <span className="font-semibold">Release Date:</span>
                 <span>
