@@ -14,7 +14,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Star, Telescope, TrendingUp, Popcorn, Glasses } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useParams } from "next/navigation";
 
 const navigationItems = {
   movies: [
@@ -65,10 +65,15 @@ const navigationItems = {
 
 export function GlobalSidebar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const { id } = useParams<{ id: string }>();
   const defaultTab = pathname.startsWith("/series") ? "series" : "movies";
 
   const getCurrentSection = () => {
     const parts = pathname.split("/");
+
+    // If there's an ID in the path, return discover
+    if (id) return "discover";
+
     return parts.length > 2 ? parts[2] : "discover";
   };
 
