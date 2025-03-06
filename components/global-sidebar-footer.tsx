@@ -1,11 +1,8 @@
 import Link from "next/link";
-import { ThemeSwitcher } from "./theme-switcher";
-import { getTheme } from "@/lib/theme";
 import { auth, signOut } from "@/auth";
 import { Button } from "./ui/button";
 
 export async function GlobalSidebarFooter() {
-  const theme = await getTheme();
   const session = await auth();
   return (
     <div className="flex flex-row gap-2">
@@ -30,7 +27,6 @@ export async function GlobalSidebarFooter() {
           </Button>
         </>
       )}
-      <ThemeSwitcher initialTheme={theme} />
     </div>
   );
 }
