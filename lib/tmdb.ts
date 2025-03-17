@@ -67,6 +67,9 @@ export async function getMovies(
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
+    next: {
+      revalidate: 60 * 60 * 24, // 24 hours
+    },
   });
 
   if (!res.ok) {
@@ -83,6 +86,9 @@ export async function getTrendingMovies(): Promise<Movie[]> {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
+    next: {
+      revalidate: 60 * 60 * 24, // 24 hours
+    },
   });
 
   const data = (await res.json()) as MediaResponse<Movie>;
@@ -93,6 +99,9 @@ export async function getPopularMovies(): Promise<Movie[]> {
   const res = await fetch(`${BASE_TMDB_URL}movie/popular`, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
+    },
+    next: {
+      revalidate: 60 * 60 * 24, // 24 hours
     },
   });
 
@@ -105,6 +114,9 @@ export async function getTopRatedMovies(): Promise<Movie[]> {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
+    next: {
+      revalidate: 60 * 60 * 24, // 24 hours
+    },
   });
 
   const data = (await res.json()) as MediaResponse<Movie>;
@@ -115,6 +127,9 @@ export async function getMovieDetails(id: string): Promise<MovieDetails> {
   const res = await fetch(`${BASE_TMDB_URL}movie/${Number(id)}`, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
+    },
+    next: {
+      revalidate: 60 * 60 * 24, // 24 hours
     },
   });
 
@@ -138,6 +153,9 @@ export async function getSeries(
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
+    next: {
+      revalidate: 60 * 60 * 24, // 24 hours
+    },
   });
 
   if (!res.ok) {
@@ -153,6 +171,9 @@ export async function getTrendingSeries(): Promise<Series[]> {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
+    next: {
+      revalidate: 60 * 60 * 24, // 24 hours
+    },
   });
 
   const data = (await res.json()) as MediaResponse<Series>;
@@ -163,6 +184,9 @@ export async function getPopularSeries(): Promise<Series[]> {
   const res = await fetch(`${BASE_TMDB_URL}tv/popular`, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
+    },
+    next: {
+      revalidate: 60 * 60 * 24, // 24 hours
     },
   });
 
@@ -175,6 +199,9 @@ export async function getTopRatedSeries(): Promise<Series[]> {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
+    next: {
+      revalidate: 60 * 60 * 24, // 24 hours
+    },
   });
 
   const data = (await res.json()) as MediaResponse<Series>;
@@ -185,6 +212,9 @@ export async function getSeriesDetails(id: string): Promise<SeriesDetails> {
   const res = await fetch(`${BASE_TMDB_URL}tv/${Number(id)}`, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
+    },
+    next: {
+      revalidate: 60 * 60 * 24, // 24 hours
     },
   });
 
