@@ -1,8 +1,25 @@
 import { getMovies } from "@/lib/tmdb";
 import { MediaList } from "./media-list";
 
-export async function DiscoverMovies(props: { query: string; genres: string }) {
-  const movies = await getMovies(props.query, props.genres);
+interface DiscoverMoviesProps {
+  query?: string;
+  genres?: string;
+  page?: number;
+}
 
-  return <MediaList items={movies} type="movies" />;
+export async function DiscoverMovies({
+  query,
+  genres,
+  page = 1,
+}: DiscoverMoviesProps) {
+  const moviesData = await getMovies(query, genres, page);
+
+  return (
+    <MediaList
+      items={moviesData.results}
+      type="movies"
+      currentPage={moviesData.page}
+      totalPages={moviesData.total_pages}
+    />
+  );
 }

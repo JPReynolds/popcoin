@@ -5,12 +5,15 @@ import { Card, CardContent } from "./ui/card";
 import Image from "next/image";
 import { FavoriteButton } from "./favorite-button";
 import { getFavoriteStatus } from "@/app/(media)/actions";
+import { MediaPagination } from "./media-pagination";
 
 type MediaItem = Movie | Series;
 
 interface MediaListProps {
   items: MediaItem[];
   type: MediaType;
+  currentPage?: number;
+  totalPages?: number;
 }
 
 function getTitle(item: MediaItem, type: MediaType): string {
@@ -55,14 +58,20 @@ async function MediaListItem({
   );
 }
 
-export function MediaList({ items, type }: MediaListProps) {
+export function MediaList({
+  items,
+  type,
+  currentPage = 1,
+  totalPages = 1,
+}: MediaListProps) {
   return (
-    <div className="flex justify-center">
+    <div className="flex flex-col justify-center gap-4">
       <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-6xl">
         {items.map((item) => (
           <MediaListItem key={item.id} item={item} type={type} />
         ))}
       </ul>
+      <MediaPagination currentPage={currentPage} totalPages={totalPages} />
     </div>
   );
 }

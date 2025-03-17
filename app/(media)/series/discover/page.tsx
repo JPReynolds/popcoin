@@ -5,11 +5,12 @@ import { DiscoverSeries } from "@/components/discover-series";
 // import { SeriesGenreDropdown } from "@/components/series-genre-dropdown";
 
 export default async function Discover(props: {
-  searchParams: Promise<{ query: string; genres: string }>;
+  searchParams: Promise<{ query?: string; genres?: string; page?: string }>;
 }) {
   const searchParams = await props.searchParams;
   const query = searchParams.query;
   const genres = searchParams.genres;
+  const page = searchParams.page ? parseInt(searchParams.page) : 1;
 
   return (
     <div className="flex flex-col justify-center">
@@ -18,7 +19,7 @@ export default async function Discover(props: {
         {/* <SeriesGenreDropdown /> */}
       </div>
       <Suspense fallback={<MediaListSkeleton />}>
-        <DiscoverSeries query={query} genres={genres} />
+        <DiscoverSeries query={query} genres={genres} page={page} />
       </Suspense>
     </div>
   );

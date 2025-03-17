@@ -53,12 +53,14 @@ type MediaResponse<T> = {
 
 export async function getMovies(
   query?: string,
-  genres?: string
-): Promise<Movie[]> {
+  genres?: string,
+  page: number = 1
+): Promise<MediaResponse<Movie>> {
   const endpoint = query ? "search/movie" : "discover/movie";
   const params = {
     query: query,
     with_genres: genres,
+    page: page.toString(),
   };
 
   const url = buildUrl(BASE_TMDB_URL, endpoint, params);
@@ -78,11 +80,17 @@ export async function getMovies(
 
   const data = (await res.json()) as MediaResponse<Movie>;
 
-  return data.results;
+  return data;
 }
 
-export async function getTrendingMovies(): Promise<Movie[]> {
-  const res = await fetch(`${BASE_TMDB_URL}trending/movie/week`, {
+export async function getTrendingMovies(
+  page: number = 1
+): Promise<MediaResponse<Movie>> {
+  const url = buildUrl(BASE_TMDB_URL, "trending/movie/week", {
+    page: page.toString(),
+  });
+
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
@@ -92,11 +100,17 @@ export async function getTrendingMovies(): Promise<Movie[]> {
   });
 
   const data = (await res.json()) as MediaResponse<Movie>;
-  return data.results;
+  return data;
 }
 
-export async function getPopularMovies(): Promise<Movie[]> {
-  const res = await fetch(`${BASE_TMDB_URL}movie/popular`, {
+export async function getPopularMovies(
+  page: number = 1
+): Promise<MediaResponse<Movie>> {
+  const url = buildUrl(BASE_TMDB_URL, "movie/popular", {
+    page: page.toString(),
+  });
+
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
@@ -106,11 +120,17 @@ export async function getPopularMovies(): Promise<Movie[]> {
   });
 
   const data = (await res.json()) as MediaResponse<Movie>;
-  return data.results;
+  return data;
 }
 
-export async function getTopRatedMovies(): Promise<Movie[]> {
-  const res = await fetch(`${BASE_TMDB_URL}trending/movie/week`, {
+export async function getTopRatedMovies(
+  page: number = 1
+): Promise<MediaResponse<Movie>> {
+  const url = buildUrl(BASE_TMDB_URL, "movie/top_rated", {
+    page: page.toString(),
+  });
+
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
@@ -120,7 +140,7 @@ export async function getTopRatedMovies(): Promise<Movie[]> {
   });
 
   const data = (await res.json()) as MediaResponse<Movie>;
-  return data.results;
+  return data;
 }
 
 export async function getMovieDetails(id: string): Promise<MovieDetails> {
@@ -139,12 +159,14 @@ export async function getMovieDetails(id: string): Promise<MovieDetails> {
 
 export async function getSeries(
   query?: string,
-  genres?: string
-): Promise<Series[]> {
+  genres?: string,
+  page: number = 1
+): Promise<MediaResponse<Series>> {
   const endpoint = query ? "search/tv" : "discover/tv";
   const params = {
     query: query,
     with_genres: genres,
+    page: page.toString(),
   };
 
   const url = buildUrl(BASE_TMDB_URL, endpoint, params);
@@ -163,11 +185,17 @@ export async function getSeries(
   }
 
   const data = (await res.json()) as MediaResponse<Series>;
-  return data.results;
+  return data;
 }
 
-export async function getTrendingSeries(): Promise<Series[]> {
-  const res = await fetch(`${BASE_TMDB_URL}trending/tv/week`, {
+export async function getTrendingSeries(
+  page: number = 1
+): Promise<MediaResponse<Series>> {
+  const url = buildUrl(BASE_TMDB_URL, "trending/tv/week", {
+    page: page.toString(),
+  });
+
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
@@ -177,11 +205,15 @@ export async function getTrendingSeries(): Promise<Series[]> {
   });
 
   const data = (await res.json()) as MediaResponse<Series>;
-  return data.results;
+  return data;
 }
 
-export async function getPopularSeries(): Promise<Series[]> {
-  const res = await fetch(`${BASE_TMDB_URL}tv/popular`, {
+export async function getPopularSeries(
+  page: number = 1
+): Promise<MediaResponse<Series>> {
+  const url = buildUrl(BASE_TMDB_URL, "tv/popular", { page: page.toString() });
+
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
@@ -191,11 +223,17 @@ export async function getPopularSeries(): Promise<Series[]> {
   });
 
   const data = (await res.json()) as MediaResponse<Series>;
-  return data.results;
+  return data;
 }
 
-export async function getTopRatedSeries(): Promise<Series[]> {
-  const res = await fetch(`${BASE_TMDB_URL}tv/top_rated`, {
+export async function getTopRatedSeries(
+  page: number = 1
+): Promise<MediaResponse<Series>> {
+  const url = buildUrl(BASE_TMDB_URL, "tv/top_rated", {
+    page: page.toString(),
+  });
+
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
     },
@@ -205,7 +243,7 @@ export async function getTopRatedSeries(): Promise<Series[]> {
   });
 
   const data = (await res.json()) as MediaResponse<Series>;
-  return data.results;
+  return data;
 }
 
 export async function getSeriesDetails(id: string): Promise<SeriesDetails> {
