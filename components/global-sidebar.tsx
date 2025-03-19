@@ -104,9 +104,11 @@ export function GlobalSidebar({ children }: { children: React.ReactNode }) {
 
   return (
     <Sidebar>
-      <SidebarHeader className="flex flex-row items-center justify-center gap-2">
-        <Popcorn />
-        Popcoin
+      <SidebarHeader className="flex items-center justify-center">
+        <Link href="/" className="flex flex-row items-center gap-2">
+          <Popcorn />
+          Popcoin
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <Tabs defaultValue={defaultTab} className="w-full">

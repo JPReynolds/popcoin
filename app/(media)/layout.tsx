@@ -28,9 +28,7 @@ export default async function Layout({
           <SidebarTrigger />
           <ThemeSwitcher initialTheme={theme} />
         </div>
-        <div className="flex-1 flex flex-col px-4 sm:px-[10%] md:px-[15%] lg:px-[20%] xl:px-[25%]">
-          {children}
-        </div>
+        {children}
       </main>
     </Providers>
   );

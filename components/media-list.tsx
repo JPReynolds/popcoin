@@ -23,7 +23,7 @@ function getTitle(item: MediaItem, type: MediaType): string {
   return (item as Series).name;
 }
 
-async function MediaListItem({
+export async function MediaItem({
   item,
   type,
 }: {
@@ -32,29 +32,27 @@ async function MediaListItem({
 }) {
   const isFavorited = await getFavoriteStatus(item.id, type);
   return (
-    <li key={item.id}>
-      <Link href={`/${type}/${item.id}`}>
-        <Card className="transition-transform hover:scale-105 overflow-hidden relative">
-          <CardContent className="p-0">
-            <Image
-              src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
-              alt={getTitle(item, type)}
-              width={150}
-              height={225}
-              className="w-full h-full object-cover"
-            />
-            <FavoriteButton
-              mediaId={item.id.toString()}
-              mediaType={type}
-              initialFavorited={isFavorited}
-              variant="ghost"
-              showText={false}
-              className="absolute bottom-2 right-2 h-6 w-6 rounded-full hover:bg-transparent p-0 transition-all [&>svg]:hover:scale-125 [&>svg]:transition-transform"
-            />
-          </CardContent>
-        </Card>
-      </Link>
-    </li>
+    <Link href={`/${type}/${item.id}`}>
+      <Card className="transition-transform hover:scale-105 overflow-hidden relative">
+        <CardContent className="p-0">
+          <Image
+            src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+            alt={getTitle(item, type)}
+            width={150}
+            height={225}
+            className="w-full h-full object-cover"
+          />
+          <FavoriteButton
+            mediaId={item.id.toString()}
+            mediaType={type}
+            initialFavorited={isFavorited}
+            variant="ghost"
+            showText={false}
+            className="absolute bottom-2 right-2 h-6 w-6 rounded-full hover:bg-transparent p-0 transition-all [&>svg]:hover:scale-125 [&>svg]:transition-transform"
+          />
+        </CardContent>
+      </Card>
+    </Link>
   );
 }
 
@@ -68,7 +66,9 @@ export function MediaList({
     <div className="flex flex-col justify-center gap-4">
       <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-6xl">
         {items.map((item) => (
-          <MediaListItem key={item.id} item={item} type={type} />
+          <li key={item.id}>
+            <MediaItem key={item.id} item={item} type={type} />
+          </li>
         ))}
       </ul>
       <MediaPagination currentPage={currentPage} totalPages={totalPages} />
