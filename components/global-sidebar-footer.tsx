@@ -10,10 +10,12 @@ import {
   MenubarItem,
   MenubarSeparator,
 } from "./ui/menubar";
-
+import { ThemeSwitcher } from "./theme-switcher";
+import { getTheme } from "@/lib/theme";
 export async function GlobalSidebarFooter() {
   const session = await auth();
   const user = session?.user;
+  const theme = await getTheme();
   return (
     <div className="flex flex-row gap-2">
       {session ? (
@@ -33,6 +35,10 @@ export async function GlobalSidebarFooter() {
                   <h5 className="text-sm font-medium">{user?.name}</h5>
                   <p className="text-xs text-muted-foreground">{user?.email}</p>
                 </div>
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem asChild>
+                <ThemeSwitcher initialTheme={theme} />
               </MenubarItem>
               <MenubarSeparator />
               <MenubarItem className="">

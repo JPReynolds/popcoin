@@ -3,8 +3,6 @@ import { GlobalSidebar } from "@/components/global-sidebar";
 import Providers from "../providers";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { GlobalSidebarFooter } from "@/components/global-sidebar-footer";
-import { ThemeSwitcher } from "@/components/theme-switcher";
-import { getTheme } from "@/lib/theme";
 
 export const metadata = {
   title: "Popcoin",
@@ -15,7 +13,6 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const theme = await getTheme();
   return (
     <Providers>
       <GlobalSidebar>
@@ -24,10 +21,7 @@ export default async function Layout({
         </Suspense>
       </GlobalSidebar>
       <main className="w-full h-screen flex flex-col">
-        <div className="flex flex-row justify-between">
-          <SidebarTrigger />
-          <ThemeSwitcher initialTheme={theme} />
-        </div>
+        <SidebarTrigger className="z-10" />
         {children}
       </main>
     </Providers>

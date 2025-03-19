@@ -11,7 +11,7 @@ interface FeaturedMovieProps {
 
 export function FeaturedMovie({ movie, className }: FeaturedMovieProps) {
   return (
-    <div className={cn("relative w-full", className)}>
+    <div className={cn("w-full", className)}>
       <div className="absolute inset-0">
         <Image
           src={`https://image.tmdb.org/t/p/original${
