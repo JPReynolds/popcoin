@@ -1,7 +1,8 @@
 # TODO
 
-- [ ] add home page
-- [ ] add not found pages
+- [x] add home page
+- [x] add not found pages
 - [ ] add error pages
-- [ ] improve sidebar layout/design
+- [x] improve sidebar layout/design
 - [ ] add github provider auth
+- [ ] sort folder structure

@@ -144,7 +144,9 @@ export async function getTopRatedMovies(
   return data;
 }
 
-export async function getMovieDetails(id: string): Promise<MovieDetails> {
+export async function getMovieDetails(
+  id: string
+): Promise<MovieDetails | null> {
   const res = await fetch(`${BASE_TMDB_URL}movie/${Number(id)}`, {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_READ_ACCESS_TOKEN}`,
@@ -153,6 +155,13 @@ export async function getMovieDetails(id: string): Promise<MovieDetails> {
       revalidate: 60 * 60 * 24, // 24 hours
     },
   });
+
+  if (!res.ok) {
+    if (res.status === 404) {
+      return null;
+    }
+    throw new Error(`Failed to fetch movie details (status: ${res.status})`);
+  }
 
   const data = await res.json();
   return data;

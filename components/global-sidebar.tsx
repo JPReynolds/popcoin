@@ -105,9 +105,15 @@ export function GlobalSidebar({ children }: { children: React.ReactNode }) {
   return (
     <Sidebar>
       <SidebarHeader className="flex items-center justify-center">
-        <Link href="/" className="flex flex-row items-center gap-2">
-          <Popcorn />
-          Popcoin
+        <Link
+          href="/"
+          className="flex flex-row justify-center items-center font-bold p-0 text-2xl"
+        >
+          <Popcorn className="text-yellow-500" />
+          <p>
+            <span className="text-red-500">Pop</span>
+            <span className="text-yellow-500">coin</span>
+          </p>
         </Link>
       </SidebarHeader>
       <SidebarContent>

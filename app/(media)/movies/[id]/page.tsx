@@ -9,12 +9,18 @@ import { getMovieDetails } from "@/lib/tmdb";
 import Image from "next/image";
 import { getFavoriteStatus } from "../../actions";
 import { FavoriteButton } from "@/components/favorite-button";
+import { notFound } from "next/navigation";
 
 export default async function Movie(props: {
   params: Promise<{ id: string }>;
 }) {
   const { id } = await props.params;
   const movie = await getMovieDetails(id);
+
+  if (!movie) {
+    return notFound();
+  }
+
   const isFavorited = await getFavoriteStatus(id, "movies");
 
   return (
