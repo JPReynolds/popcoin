@@ -1,9 +1,9 @@
-"use client"
- 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+"use client";
+
+import * as React from "react";
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -11,61 +11,61 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { queryOptions, useQuery } from "@tanstack/react-query"
-import { Genres } from "@/app/types"
-import { useSearchParams, useRouter } from "next/navigation"
-import { Skeleton } from "./ui/skeleton"
+} from "@/components/ui/popover";
+import { queryOptions, useQuery } from "@tanstack/react-query";
+import { Genres } from "@/app/types";
+import { useSearchParams, useRouter } from "next/navigation";
+import { Skeleton } from "./ui/skeleton";
 
 const fetchGenres = async (): Promise<Genres> => {
-  const res = await fetch('/api/genres');
+  const res = await fetch("/api/genres");
   if (!res.ok) {
-    throw new Error('Failed to fetch genres');
+    throw new Error("Failed to fetch genres");
   }
   return res.json();
 };
 
-
 const genresOptions = queryOptions({
-    queryKey: ["genres"],
-    queryFn: fetchGenres,
-})
+  queryKey: ["genres"],
+  queryFn: fetchGenres,
+});
 
+// @TODO - convert to server component
 export function MovieGenreDropdown() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
   const searchParams = useSearchParams();
   const genreParams = searchParams.get("genres");
   const router = useRouter();
 
   const { data, isPending } = useQuery<Genres>(genresOptions);
 
-  const selectedGenres = genreParams ? genreParams.split(',').map(Number) : [];
+  const selectedGenres = genreParams ? genreParams.split(",").map(Number) : [];
 
   const handleSelect = (genreId: number) => {
     const newParams = new URLSearchParams(searchParams.toString());
-    
+
     if (selectedGenres.includes(genreId)) {
-      const updatedGenres = selectedGenres.filter(id => id !== genreId);
+      const updatedGenres = selectedGenres.filter((id) => id !== genreId);
       if (updatedGenres.length === 0) {
-        newParams.delete('genres');
+        newParams.delete("genres");
       } else {
-        newParams.set('genres', updatedGenres.join(','));
+        newParams.set("genres", updatedGenres.join(","));
       }
     } else {
       const updatedGenres = [...selectedGenres, genreId];
-      newParams.set('genres', updatedGenres.join(','));
+      newParams.set("genres", updatedGenres.join(","));
     }
-    
+
     router.push(`?${newParams.toString()}`);
   };
-  
-  if (isPending) return <Skeleton className="h-auto w-[200px]" />
- 
+
+  if (isPending) return <Skeleton className="h-auto w-[200px]" />;
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -90,13 +90,15 @@ export function MovieGenreDropdown() {
                   key={genre.id}
                   value={genre.name}
                   onSelect={() => {
-                    handleSelect(genre.id)
+                    handleSelect(genre.id);
                   }}
                 >
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      Boolean(selectedGenres?.includes(genre.id)) ? "opacity-100" : "opacity-0"
+                      Boolean(selectedGenres?.includes(genre.id))
+                        ? "opacity-100"
+                        : "opacity-0"
                     )}
                   />
                   {genre.name}
@@ -107,5 +109,5 @@ export function MovieGenreDropdown() {
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }
