@@ -26,7 +26,7 @@ export interface Series {
 export type Movies = Movie[];
 export type SeriesList = Series[];
 
-interface MovieDetails extends Movie {
+export interface MovieDetails extends Movie {
   original_title: string;
   overview: string;
   release_date: string;
