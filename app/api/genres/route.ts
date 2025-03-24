@@ -1,5 +1,5 @@
-import { Genres, GenresResponse } from '@/app/types';
-import { BASE_TMDB_URL } from '@/lib/tmdb';
+import { GenresResponse } from "@/app/types";
+import { BASE_TMDB_URL } from "@/lib/tmdb";
 
 export async function GET() {
   try {
@@ -10,12 +10,15 @@ export async function GET() {
     });
 
     if (!res.ok) {
-      return Response.json({ error: 'Failed to fetch genres' }, { status: res.status });
+      return Response.json(
+        { error: "Failed to fetch genres" },
+        { status: res.status }
+      );
     }
 
     const data = (await res.json()) as GenresResponse;
     return Response.json(data.genres);
   } catch (error) {
-    return Response.json({ error: 'An error occurred' }, { status: 500 });
+    return Response.json({ error: "An error occurred" }, { status: 500 });
   }
 }
