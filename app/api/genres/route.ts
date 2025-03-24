@@ -1,6 +1,5 @@
 import { GenresResponse } from "@/app/types";
 import { BASE_TMDB_URL } from "@/lib/tmdb";
-import { error } from "console";
 
 export async function GET() {
   try {
