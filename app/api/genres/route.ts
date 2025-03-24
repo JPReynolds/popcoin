@@ -1,5 +1,6 @@
 import { GenresResponse } from "@/app/types";
 import { BASE_TMDB_URL } from "@/lib/tmdb";
+import { error } from "console";
 
 export async function GET() {
   try {
@@ -18,7 +19,8 @@ export async function GET() {
 
     const data = (await res.json()) as GenresResponse;
     return Response.json(data.genres);
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
     return Response.json({ error: "An error occurred" }, { status: 500 });
   }
 }
