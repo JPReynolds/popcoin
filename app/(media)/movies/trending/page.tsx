@@ -2,12 +2,11 @@ import { Suspense } from "react";
 import { MediaListSkeleton } from "@/components/media-list-skeleton";
 import { TrendingMovies } from "@/components/trending-movies";
 
-export default async function Trending({
-  searchParams,
-}: {
-  searchParams: { page?: string };
+export default async function Trending(props: {
+  searchParams: Promise<{ page?: string }>;
 }) {
-  const page = searchParams.page ? parseInt(searchParams.page) : 1;
+  const searchParams = await props.searchParams;
+  const page = searchParams?.page ? parseInt(searchParams.page) : 1;
 
   return (
     <div className="flex justify-center">
