@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import { Button } from "./ui/button";
-import { CircleUserRound, LogOut } from "lucide-react";
+import { CircleUserRound } from "lucide-react";
 import {
   Menubar,
   MenubarMenu,
@@ -12,6 +12,8 @@ import {
 } from "./ui/menubar";
 import { ThemeSwitcher } from "./theme-switcher";
 import { getTheme } from "@/lib/theme";
+import { LogOut } from "./log-out";
+
 export async function GlobalSidebarFooter() {
   const session = await auth();
   const user = session?.user;
@@ -42,22 +44,7 @@ export async function GlobalSidebarFooter() {
               </MenubarItem>
               <MenubarSeparator />
               <MenubarItem className="">
-                <form
-                  action={async () => {
-                    "use server";
-                    await signOut();
-                  }}
-                  className="w-full"
-                >
-                  <Button
-                    variant="ghost"
-                    type="submit"
-                    className="w-full p-2 justify-start"
-                  >
-                    <LogOut className="w-4 h-4" />
-                    Log Out
-                  </Button>
-                </form>
+                <LogOut />
               </MenubarItem>
             </MenubarContent>
           </MenubarMenu>
