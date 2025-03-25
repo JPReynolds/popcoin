@@ -9,7 +9,7 @@ export default async function Trending(props: {
   const page = searchParams?.page ? parseInt(searchParams.page) : 1;
 
   return (
-    <div className="flex justify-center">
+    <div className="flex flex-col justify-center">
       <Suspense fallback={<MediaListSkeleton />}>
         <TrendingSeries page={page} />
       </Suspense>
