@@ -6,3 +6,7 @@
 - [x] improve sidebar layout/design
 - [ ] add github provider auth
 - [ ] sort folder structure
+- [x] add db
+- [x] deploy
+- [x] enable PPR
+- [ ] use react query for prefetching on the server
