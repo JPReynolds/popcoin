@@ -7,19 +7,29 @@ import { cn } from "@/lib/utils";
 interface FeaturedMovieProps {
   movie: Movie;
   className?: string;
+  isMobile?: boolean;
 }
 
-export function FeaturedMovie({ movie, className }: FeaturedMovieProps) {
+export function FeaturedMovie({
+  movie,
+  className,
+  isMobile,
+}: FeaturedMovieProps) {
   return (
     <div className={cn("w-full", className)}>
       <div className="absolute inset-0">
         <Image
           src={`https://image.tmdb.org/t/p/original${
-            movie.backdrop_path || movie.poster_path
+            isMobile
+              ? movie.poster_path
+              : movie.backdrop_path || movie.poster_path
           }`}
           alt={movie.title}
           fill
-          className="object-cover object-top"
+          className={cn(
+            "object-cover",
+            isMobile ? "object-top" : "object-center"
+          )}
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
