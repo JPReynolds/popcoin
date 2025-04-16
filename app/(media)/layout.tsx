@@ -20,7 +20,7 @@ export default async function Layout({
           <GlobalSidebarFooter />
         </Suspense>
       </GlobalSidebar>
-      <main className="w-full h-screen flex flex-col">
+      <main className="w-full h-screen flex flex-col overflow-x-hidden">
         <SidebarTrigger className="z-10" />
         {children}
       </main>
