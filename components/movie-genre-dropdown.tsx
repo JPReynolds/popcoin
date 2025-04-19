@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
@@ -64,7 +64,7 @@ export function MovieGenreDropdown() {
     router.push(`?${newParams.toString()}`);
   };
 
-  if (isPending) return <Skeleton className="h-auto w-[200px]" />;
+  // if (isPending) return <Skeleton className="h-auto w-[200px]" />;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -76,38 +76,44 @@ export function MovieGenreDropdown() {
           className="w-[200px] justify-between"
         >
           Genre
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          {isPending ? (
+            <Loader2 className="ml-2 h-4 w-4 shrink-0 opacity-50 animate-spin" />
+          ) : (
+            <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+          )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
-        <Command>
-          <CommandInput placeholder="Search genres..." />
-          <CommandList>
-            <CommandEmpty>No genres found.</CommandEmpty>
-            <CommandGroup>
-              {data?.map((genre) => (
-                <CommandItem
-                  key={genre.id}
-                  value={genre.name}
-                  onSelect={() => {
-                    handleSelect(genre.id);
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      Boolean(selectedGenres?.includes(genre.id))
-                        ? "opacity-100"
-                        : "opacity-0"
-                    )}
-                  />
-                  {genre.name}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
+      {!isPending && (
+        <PopoverContent className="w-[200px] p-0">
+          <Command>
+            <CommandInput placeholder="Search genres..." />
+            <CommandList>
+              <CommandEmpty>No genres found.</CommandEmpty>
+              <CommandGroup>
+                {data?.map((genre) => (
+                  <CommandItem
+                    key={genre.id}
+                    value={genre.name}
+                    onSelect={() => {
+                      handleSelect(genre.id);
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        Boolean(selectedGenres?.includes(genre.id))
+                          ? "opacity-100"
+                          : "opacity-0"
+                      )}
+                    />
+                    {genre.name}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      )}
     </Popover>
   );
 }
