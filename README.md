@@ -12,3 +12,4 @@
 - [x] deploy
 - [x] enable PPR
 - [ ] use react query for prefetching on the server
+- [ ] update schema - do we need to store movies and series? Can we just store favourites with id and type against a user? What if we were to add reviews?

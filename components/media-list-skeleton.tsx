@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from "./ui/card";
+import { Card, CardContent } from "./ui/card";
 import { Skeleton } from "./ui/skeleton";
 
 export function MediaListSkeleton() {
@@ -7,12 +7,9 @@ export function MediaListSkeleton() {
       <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full max-w-6xl">
         {Array.from({ length: 9 }).map((_, i) => (
           <li key={i}>
-            <Card>
-              <CardHeader>
-                <Skeleton className="h-4" />
-              </CardHeader>
-              <CardContent>
-                <Skeleton className="w-full h-[150px]" />
+            <Card className="overflow-hidden">
+              <CardContent className="p-0">
+                <Skeleton className="w-full aspect-[2/3]" />
               </CardContent>
             </Card>
           </li>
