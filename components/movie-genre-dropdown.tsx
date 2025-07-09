@@ -20,7 +20,6 @@ import {
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { Genres } from "@/app/types";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Skeleton } from "./ui/skeleton";
 
 const fetchGenres = async (): Promise<Genres> => {
   const res = await fetch("/api/genres");
@@ -63,8 +62,6 @@ export function MovieGenreDropdown() {
 
     router.push(`?${newParams.toString()}`);
   };
-
-  // if (isPending) return <Skeleton className="h-auto w-[200px]" />;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
